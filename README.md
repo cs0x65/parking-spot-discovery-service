@@ -23,7 +23,7 @@ Bonus
   
   This is implemented as a RESTful API using:
   Java
-  Jersey which JAX-RS implementation to build REST endpoints
+  Jersey which is a JAX-RS implementation to build REST endpoints
   MySQL
   JDBC
   
