@@ -1,4 +1,4 @@
-# ridecell-parkingspot
+# parking spot microservice
 The RideCell parking spot assignment
 
 This is an attempt to solve the problem statement given below:
