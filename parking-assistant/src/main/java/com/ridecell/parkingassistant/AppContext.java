@@ -24,7 +24,7 @@ public class AppContext {
 	 
 	private Properties props;
 	
-	private RawDaoProvider<RawDao<KEntity>> daoProvider;
+	private RawDaoProvider<KEntity> daoProvider;
 	
 	private AppContext(){
 		props = new Properties();
@@ -63,7 +63,7 @@ public class AppContext {
 	/**
 	 * @return the daoProvider
 	 */
-	public RawDaoProvider getDaoProvider() {
+	public RawDaoProvider<KEntity> getDaoProvider() {
 		return daoProvider;
 	}
 	
