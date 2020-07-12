@@ -41,6 +41,9 @@ public class ParkingSpotResourceImpl implements ParkingSpotResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't serve results! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't serve results!", e);
+		}finally {
+			if (parkingSpotDaoImpl != null)
+				parkingSpotDaoImpl.close();
 		}
 		
 		return response;
@@ -63,6 +66,9 @@ public class ParkingSpotResourceImpl implements ParkingSpotResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't serve results! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't serve results!", e);
+		}finally {
+			if (parkingSpotDaoImpl != null)
+				parkingSpotDaoImpl.close();
 		}
 		
 		return response;
@@ -85,6 +91,9 @@ public class ParkingSpotResourceImpl implements ParkingSpotResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't serve results! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't serve results!", e);
+		}finally {
+			if (parkingSpotDaoImpl != null)
+				parkingSpotDaoImpl.close();
 		}
 		
 		return response;
@@ -111,6 +120,9 @@ public class ParkingSpotResourceImpl implements ParkingSpotResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't serve results! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't serve results!", e);
+		}finally {
+			if (parkingSpotDaoImpl != null)
+				parkingSpotDaoImpl.close();
 		}
 		
 		return response;

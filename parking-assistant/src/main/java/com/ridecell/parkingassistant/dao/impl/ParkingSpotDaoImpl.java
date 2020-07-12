@@ -6,9 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ridecell.parkingassistant.dao.ParkingSpotDao;
+import kanad.kore.data.dao.raw.AbstractRawDao;
 import org.apache.logging.log4j.LogManager;
 
-import com.ridecell.parkingassistant.dao.AbstractRawDao;
 import com.ridecell.parkingassistant.model.ParkingSpot;
 
 
@@ -17,7 +18,7 @@ import com.ridecell.parkingassistant.model.ParkingSpot;
  * git: champasheru saurabh.cse2@gmail.com
  *
  */
-public class ParkingSpotDaoImpl extends AbstractRawDao implements ParkingSpotDao {
+public class ParkingSpotDaoImpl extends AbstractRawDao<ParkingSpot> implements ParkingSpotDao {
 	@Override
 	public List<ParkingSpot> getAll() {
 		LogManager.getLogger().info("Retrieving all parking spots...");
@@ -28,22 +29,9 @@ public class ParkingSpotDaoImpl extends AbstractRawDao implements ParkingSpotDao
         List<ParkingSpot> spots = new ArrayList<>();
         try {
         	statement = connection.prepareStatement(query);
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             while (rs.next()) {
-            	ParkingSpot parkingSpot = new ParkingSpot();
-            	parkingSpot.setId(rs.getLong("id"));
-            	String lat = rs.getString("latitude");
-            	if(lat != null){
-            		parkingSpot.setLatitude(Float.parseFloat(lat));
-            		
-            	}
-            	String lng = rs.getString("longitude");
-            	if(lat != null){
-            		parkingSpot.setLongitude(Float.parseFloat(lng));
-            		
-            	}
-            	parkingSpot.setAddress(rs.getString("address"));
-            	spots.add(parkingSpot);
+            	spots.add(parse(rs));
             }
         } catch (SQLException sqle) {
         	LogManager.getLogger().error("Error:retrieving all parking spots...", sqle);
@@ -72,22 +60,9 @@ public class ParkingSpotDaoImpl extends AbstractRawDao implements ParkingSpotDao
         List<ParkingSpot> spots = new ArrayList<>();
         try {
         	statement = connection.prepareStatement(query);
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             while (rs.next()) {
-            	ParkingSpot parkingSpot = new ParkingSpot();
-            	parkingSpot.setId(rs.getLong("id"));
-            	String lat = rs.getString("latitude");
-            	if(lat != null){
-            		parkingSpot.setLatitude(Float.parseFloat(lat));
-            		
-            	}
-            	String lng = rs.getString("longitude");
-            	if(lat != null){
-            		parkingSpot.setLongitude(Float.parseFloat(lng));
-            		
-            	}
-            	parkingSpot.setAddress(rs.getString("address"));
-            	spots.add(parkingSpot);
+				spots.add(parse(rs));
             }
         } catch (SQLException sqle) {
         	LogManager.getLogger().error("Error:retrieving available parking spots...", sqle);
@@ -116,22 +91,9 @@ public class ParkingSpotDaoImpl extends AbstractRawDao implements ParkingSpotDao
         List<ParkingSpot> spots = new ArrayList<>();
         try {
         	statement = connection.prepareStatement(query);
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             while (rs.next()) {
-            	ParkingSpot parkingSpot = new ParkingSpot();
-            	parkingSpot.setId(rs.getLong("id"));
-            	String lat = rs.getString("latitude");
-            	if(lat != null){
-            		parkingSpot.setLongitude(Float.parseFloat(lat));
-            		
-            	}
-            	String lng = rs.getString("longitude");
-            	if(lat != null){
-            		parkingSpot.setLatitude(Float.parseFloat(lng));
-            		
-            	}
-            	parkingSpot.setAddress(rs.getString("address"));
-            	spots.add(parkingSpot);
+				spots.add(parse(rs));
             }
         } catch (SQLException sqle) {
         	LogManager.getLogger().error("Error:retrieving reserved parking spots...", sqle);
@@ -150,4 +112,16 @@ public class ParkingSpotDaoImpl extends AbstractRawDao implements ParkingSpotDao
         return spots;
 	}
 
+	private ParkingSpot parse(ResultSet rs){
+		ParkingSpot parkingSpot = new ParkingSpot();
+		try {
+			parkingSpot.setId(rs.getLong("id"));
+			parkingSpot.setLatitude(rs.getFloat("latitude"));
+			parkingSpot.setLongitude(rs.getFloat("longitude"));
+			parkingSpot.setAddress(rs.getString("address"));
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return parkingSpot;
+	}
 }

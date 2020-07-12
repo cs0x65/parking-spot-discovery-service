@@ -1,6 +1,8 @@
 package com.ridecell.parkingassistant.model;
 
-public class ParkingSpot {
+import kanad.kore.data.entity.KEntity;
+
+public class ParkingSpot implements KEntity {
 	private float latitude;
 	private float longitude;
 	private String address;

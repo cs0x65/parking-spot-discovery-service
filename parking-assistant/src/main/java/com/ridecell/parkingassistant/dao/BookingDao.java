@@ -1,4 +1,4 @@
-package com.ridecell.parkingassistant.dao.impl;
+package com.ridecell.parkingassistant.dao;
 
 import com.ridecell.parkingassistant.model.Booking;
 

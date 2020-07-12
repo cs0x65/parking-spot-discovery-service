@@ -24,5 +24,4 @@ public class ReservationResponseDTO extends AbstractResponseDTO {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-	
 }

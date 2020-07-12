@@ -40,6 +40,9 @@ public class BookingResourceImpl implements BookingResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't fulfill request! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't fulfill results!", e);
+		}finally {
+			if (bookingDaoImpl != null)
+				bookingDaoImpl.close();
 		}
 		
 		return response;
@@ -59,6 +62,9 @@ public class BookingResourceImpl implements BookingResource {
 			ErrorResponseDTO errorResponseDTO = RestUtils.createErrorResponseDTO(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR, "Couldn't fulfill request! Please try again.");
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResponseDTO).build();
 			LogManager.getLogger().error("Couldn't fulfill results!", e);
+		}finally {
+			if (bookingDaoImpl != null)
+				bookingDaoImpl.close();
 		}
 		
 		return response;

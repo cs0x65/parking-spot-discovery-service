@@ -1,7 +1,7 @@
 /**
  * parshwabhoomi-server	01-Dec-2017:10:20:33 PM
  */
-package com.ridecell.parkingassistant.dao.impl;
+package com.ridecell.parkingassistant.dao;
 
 import java.util.List;
 

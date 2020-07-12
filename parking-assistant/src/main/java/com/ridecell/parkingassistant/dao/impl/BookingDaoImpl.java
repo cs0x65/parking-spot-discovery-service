@@ -3,14 +3,15 @@ package com.ridecell.parkingassistant.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import com.ridecell.parkingassistant.dao.BookingDao;
+import kanad.kore.data.dao.raw.AbstractRawDao;
 import org.apache.logging.log4j.LogManager;
 
-import com.mysql.jdbc.Statement;
-import com.ridecell.parkingassistant.dao.AbstractRawDao;
 import com.ridecell.parkingassistant.model.Booking;
 
-public class BookingDaoImpl extends AbstractRawDao implements BookingDao{
+public class BookingDaoImpl extends AbstractRawDao<Booking> implements BookingDao {
 
 	@Override
 	public Booking reserve(Booking booking) {

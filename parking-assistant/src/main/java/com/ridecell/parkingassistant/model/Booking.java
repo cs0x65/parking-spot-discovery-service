@@ -1,6 +1,8 @@
 package com.ridecell.parkingassistant.model;
 
-public class Booking {
+import kanad.kore.data.entity.KEntity;
+
+public class Booking implements KEntity {
 	private long id;
 	//can also be ParkingSpot object
 	private long parkingSpotId;

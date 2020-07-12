@@ -3,10 +3,11 @@ package com.ridecell.parkingassistant;
 import java.io.IOException;
 import java.util.Properties;
 
+import kanad.kore.data.dao.DefaultDaoProviderFactory;
+import kanad.kore.data.dao.raw.RawDao;
+import kanad.kore.data.dao.raw.RawDaoProvider;
+import kanad.kore.data.entity.KEntity;
 import org.apache.logging.log4j.LogManager;
-
-import com.ridecell.parkingassistant.dao.DaoProviderFactory;
-import com.ridecell.parkingassistant.dao.RawDaoProvider;
 
 //Singleton
 public class AppContext {
@@ -23,7 +24,7 @@ public class AppContext {
 	 
 	private Properties props;
 	
-	private RawDaoProvider daoProvider;
+	private RawDaoProvider<RawDao<KEntity>> daoProvider;
 	
 	private AppContext(){
 		props = new Properties();
@@ -38,14 +39,16 @@ public class AppContext {
 		}
 		
 		Properties connectionProps = new Properties();
-		connectionProps.setProperty(RawDaoProvider.CONN_DRIVER, props.getProperty(AppContext.PS_JDBC_DRIVER));
 		connectionProps.setProperty(RawDaoProvider.CONN_URL, props.getProperty(AppContext.PS_JDBC_URL));
-		connectionProps.setProperty(RawDaoProvider.CONN_USERNAME, props.getProperty(AppContext.PS_JDBC_USERNAME));
-		connectionProps.setProperty(RawDaoProvider.CONN_PASSWORD, props.getProperty(AppContext.PS_JDBC_PASSWORD));
-		daoProvider = DaoProviderFactory.create(PS_DAO_IMPL_PACKAGE, connectionProps);
+		if (props.getProperty(AppContext.PS_JDBC_DRIVER) != null)
+			connectionProps.setProperty(RawDaoProvider.CONN_DRIVER, props.getProperty(AppContext.PS_JDBC_DRIVER));
+		if (props.getProperty(AppContext.PS_JDBC_USERNAME) != null)
+			connectionProps.setProperty(RawDaoProvider.CONN_USERNAME, props.getProperty(AppContext.PS_JDBC_USERNAME));
+		if (props.getProperty(AppContext.PS_JDBC_PASSWORD) != null)
+			connectionProps.setProperty(RawDaoProvider.CONN_PASSWORD, props.getProperty(AppContext.PS_JDBC_PASSWORD));
+		daoProvider = DefaultDaoProviderFactory.create(PS_DAO_IMPL_PACKAGE, connectionProps);
 	}
-	
-	
+
 	public static AppContext getDefaultContext(){
 		if(appContext == null){
 			appContext = new AppContext();

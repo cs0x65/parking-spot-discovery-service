@@ -1,148 +1,157 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ridecell</groupId>
-  <artifactId>parking-assistant</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>com.ridecell</groupId>
+    <artifactId>parking-assistant</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>parking-assistant</name>
-  <url>http://maven.apache.org</url>
+    <name>parking-assistant</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <dependencies>
-    <dependency>
-	     <groupId>junit</groupId>
-	     <artifactId>junit</artifactId>
-	     <version>3.8.1</version>
-	     <scope>test</scope>
-    </dependency>
-    
-    <!-- for Apache log4j2  -->
-	<dependency>
-    	<groupId>org.apache.logging.log4j</groupId>
-    	<artifactId>log4j-api</artifactId>
-    	<version>2.8</version>
-  	</dependency>
-  	<dependency>
-    	<groupId>org.apache.logging.log4j</groupId>
-    	<artifactId>log4j-core</artifactId>
-    	<version>2.8</version>
-  	</dependency>
-  	<!-- Needed to add jackson dependencies because these are optional runtime dependencies for log4j2.
-  	Hibernate uses it's own JBoss logging framework but the funny things is - if log4j/2 is on it's classpath, then it
-  	uses log4j as logger provider.
-  	Additionally, it seems the Hibenate uses a JSON/XML based layout for it's internal loggers/appenders; now because log4j2
-  	is on it's classpath it expects the JSON/XML based layout support to be available. And it comes from jackson which is 
-  	an optional runtime dependency for log4j2  -->
-  	<dependency>
-    	<groupId>com.fasterxml.jackson.core</groupId>
-    	<artifactId>jackson-core</artifactId>
-    	<version>2.8.7</version>
-	</dependency>
-	<dependency>
-    	<groupId>com.fasterxml.jackson.core</groupId>
-    	<artifactId>jackson-databind</artifactId>
-    	<version>2.8.7</version>
-	</dependency>
-  	
-    <dependency>
-    	<groupId>javax.ws.rs</groupId>
-    	<artifactId>javax.ws.rs-api</artifactId>
-    	<version>2.0.1</version>
-	</dependency>
-	<dependency>
-    	<groupId>org.glassfish.jersey.containers</groupId>
-    	<artifactId>jersey-container-jetty-http</artifactId>
-    	<version>2.25.1</version>
-	</dependency>
-	
-	<!-- for json parsing -->
-	<dependency>
-    	<groupId>org.glassfish.jersey.media</groupId>
-    	<artifactId>jersey-media-moxy</artifactId>
-    	<version>2.25.1</version>
-	</dependency>
-	
-	<dependency>
-    	<groupId>javax.json</groupId>
-    	<artifactId>javax.json-api</artifactId>
-    	<version>1.1.2</version>
-	</dependency>
-	<dependency>
-    	<groupId>org.glassfish</groupId>
-    	<artifactId>javax.json</artifactId>
-    	<version>1.1.2</version>
-	</dependency>
-	
-    <dependency>
-	    <groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.42</version>
-	</dependency>
-	
-  </dependencies>
-  
-  <build>
-    <plugins>
-   		<plugin>
-			<artifactId>maven-assembly-plugin</artifactId>
-        	<version>3.1.0</version>
-        	<configuration>
-          		<descriptorRefs>
-            		<descriptorRef>jar-with-dependencies</descriptorRef>
-          		</descriptorRefs>
-        		<archive>
-          			<manifest>
-          				<mainClass>com.ridecell.parkingassistant.App</mainClass>
-          			</manifest>
-          		</archive>
-        	</configuration>
-        	<executions>
-          		<execution>
-            		<id>make-assembly</id> <!-- this is used for inheritance merges -->
-            		<phase>package</phase> <!-- bind to the packaging phase -->
-            		<goals>
-              			<goal>single</goal>
-            		</goals>
-          		</execution>
-        	</executions>
-		</plugin>
-        <plugin>
-	   		<groupId>org.codehaus.mojo</groupId>
-	    	<artifactId>exec-maven-plugin</artifactId>
-	    	<version>1.2.1</version>
-	    	<executions>
-	    		<execution>
-	        		<goals>
-	            		<goal>java</goal>
-	            	</goals>
-	        	</execution>
-	     	</executions>
-	     	<configuration>
-	     		<mainClass>com.ridecell.parkingassistant.App</mainClass>	
-	     	</configuration>
-	 	</plugin>
-	 	<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.6.1</version>
-			<!-- All the source code, compiler compliance etc. is set to Java 1.8. 
-    		Additionally, the class files produced are also targeted for VM versions 1.8 or greater.
-    		For more info, refer links below:
-    		http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html
-    		https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html
-    		https://maven.apache.org/plugins/maven-compiler-plugin/index.html
-    		-->
-			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-			</configuration>
-      	</plugin>	
-    </plugins>
-  </build>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>kanad</groupId>
+            <artifactId>kore-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- for Apache log4j2  -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8</version>
+        </dependency>
+        <!-- Needed to add jackson dependencies because these are optional runtime dependencies for log4j2.
+        Hibernate uses it's own JBoss logging framework but the funny things is - if log4j/2 is on it's classpath, then it
+        uses log4j as logger provider.
+        Additionally, it seems the Hibenate uses a JSON/XML based layout for it's internal loggers/appenders; now because log4j2
+        is on it's classpath it expects the JSON/XML based layout support to be available. And it comes from jackson which is
+        an optional runtime dependency for log4j2  -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-jetty-http</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+
+        <!-- for json parsing -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>2.25.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.32.3</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>5.1.42</version>-->
+<!--        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.ridecell.parkingassistant.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.ridecell.parkingassistant.App</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <!-- All the source code, compiler compliance etc. is set to Java 1.8.
+                Additionally, the class files produced are also targeted for VM versions 1.8 or greater.
+                For more info, refer links below:
+                http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html
+                https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html
+                https://maven.apache.org/plugins/maven-compiler-plugin/index.html
+                -->
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
